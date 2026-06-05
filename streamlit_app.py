@@ -61,9 +61,9 @@ if menu == "Kalkulator Pengenceran":
 # =========================
 elif menu == "Tabel Periodik":
 
-    st.title("⚛️ Tabel Periodik Unsur")
+    st.title("⚗️ Tabel Periodik Unsur")
 
-    data = [
+data = [
     [1,"H","Hidrogen",1.008],
     [2,"He","Helium",4.003],
     [3,"Li","Litium",6.94],
@@ -183,7 +183,6 @@ elif menu == "Tabel Periodik":
     [117,"Ts","Tennessine",294],
     [118,"Og","Oganesson",294]
 ]
-
     df = pd.DataFrame(data)
 
     cari = st.text_input(
