@@ -170,3 +170,36 @@ for baris in periodik:
             cols[i].button(simbol, use_container_width=True)
         else:
             cols[i].write("")
+st.divider()
+st.header("🧪 Pembuatan Larutan")
+
+daftar_unsur = dict(zip(df["Simbol"], df["Massa Atom"]))
+
+rumus = st.text_input("Rumus Kimia", "NaCl")
+
+molaritas = st.number_input(
+    "Molaritas (M)",
+    min_value=0.0,
+    value=0.1,
+    step=0.1
+)
+
+volume = st.number_input(
+    "Volume (mL)",
+    min_value=1.0,
+    value=100.0
+)
+import re
+
+def hitung_mr(rumus):
+    total = 0
+
+    token = re.findall(r'([A-Z][a-z]?)(\d*)', rumus)
+
+    for unsur, jumlah in token:
+        jumlah = int(jumlah) if jumlah else 1
+
+        if unsur in daftar_unsur:
+            total += daftar_unsur[unsur] * jumlah
+
+    return total
