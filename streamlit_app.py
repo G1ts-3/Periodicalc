@@ -6,6 +6,7 @@ st.set_page_config(
     page_icon="⚗️",
     layout="wide"
 )
+
 st.title("⚗️ Tabel Periodik Unsur")
 
 data = [
