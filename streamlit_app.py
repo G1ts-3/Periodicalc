@@ -170,20 +170,7 @@ for baris in periodik:
             cols[i].button(simbol, use_container_width=True)
         else:
             cols[i].write("")
-st.markdown("""
-<style>
-div[data-testid="stButton"] button{
-    height:60px;
-    font-size:18px;
-    font-weight:bold;
-}
-</style>
-""", unsafe_allow_html=True)
-if cols[i].button(simbol, use_container_width=True):
-    st.session_state.unsur = simbol
-    if "unsur" in st.session_state:
-    st.success(f"Unsur terpilih: {st.session_state.unsur}")
-    
+            
 st.divider()
 st.header("🧪 Pembuatan Larutan")
 
