@@ -63,6 +63,8 @@ elif menu == "Tabel Periodik":
 
     st.title("⚗️ Tabel Periodik Unsur")
 
+st.title("⚗️ Tabel Periodik Unsur")
+
 data = [
     [1,"H","Hidrogen",1.008],
     [2,"He","Helium",4.003],
@@ -183,20 +185,45 @@ data = [
     [117,"Ts","Tennessine",294],
     [118,"Og","Oganesson",294]
 ]
-    df = pd.DataFrame(data)
 
-    cari = st.text_input(
-        "Cari simbol atau nama unsur"
-    )
+df = pd.DataFrame(
+    data,
+    columns=["Nomor Atom","Simbol","Nama","Massa Atom"]
+)
 
-    if cari:
-        df = df[
-            df["Simbol"].str.contains(cari, case=False)
-            |
-            df["Nama Unsur"].str.contains(cari, case=False)
-        ]
+simbol = st.selectbox(
+    "Pilih unsur",
+    df["Simbol"]
+)
 
-    st.dataframe(
-        df,
-        use_container_width=True
-    )
+hasil = df[df["Simbol"] == simbol].iloc[0]
+
+st.subheader("Informasi Unsur")
+
+st.write(f"*Nama:* {hasil['Nama']}")
+st.write(f"*Simbol:* {hasil['Simbol']}")
+st.write(f"*Nomor Atom:* {hasil['Nomor Atom']}")
+st.write(f"*Massa Atom:* {hasil['Massa Atom']}")
+
+st.divider()
+
+st.subheader("Tabel Periodik")
+
+periodik = [
+    ["H","","","","","","","","","","","","","","","","","He"],
+    ["Li","Be","","","","","","","","","","","B","C","N","O","F","Ne"],
+    ["Na","Mg","","","","","","","","","","","Al","Si","P","S","Cl","Ar"],
+    ["K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr"],
+    ["Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe"],
+    ["Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu",""],
+    ["Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr",""]
+]
+
+for baris in periodik:
+    cols = st.columns(18)
+
+    for i, simbol in enumerate(baris):
+        if simbol:
+            cols[i].button(simbol, use_container_width=True)
+        else:
+            cols[i].write("")
