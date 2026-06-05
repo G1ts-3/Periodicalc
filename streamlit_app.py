@@ -61,7 +61,7 @@ if menu == "Kalkulator Pengenceran":
 # =========================
 elif menu == "Tabel Periodik":
 
-    st.header("⚛️ Tabel Periodik Unsur")
+    st.title("⚛️ Tabel Periodik Unsur")
 
     data = [
     [1,"H","Hidrogen",1.008],
