@@ -5,7 +5,7 @@ st.title("Tabel Periodik Unsur")
 
 df = pd.read_csv("data/periodic_table.csv")
 
-pilih = st.selectbox( "Pilih Unsur",df["simbol"])
+pilih = st.selectbox("Pilih Unsur",df["simbol"])
 
 unsur = df[df["simbol"] == pilih].iloc[0]
 
