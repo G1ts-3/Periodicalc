@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import re
 
 st.set_page_config(
     page_title="PeriodicCalc",
@@ -8,163 +7,63 @@ st.set_page_config(
     layout="wide"
 )
 
-# ==========================
-# LOAD DATA
-# ==========================
-df = pd.read_csv("data/periodic_table.csv")
-
-Ar = dict(zip(df["simbol"], df["massa_atom"]))
-
-# ==========================
-# JUDUL
-# ==========================
 st.title("⚗️ PeriodicCalc")
-st.caption("Tabel Periodik & Kalkulator Kimia")
 
-# ==========================
-# PENCARIAN UNSUR
-# ==========================
-st.header("⚛️ Informasi Unsur")
-
-simbol = st.selectbox(
-    "Pilih Unsur",
-    df["simbol"]
-)
-
-unsur = df[df["simbol"] == simbol].iloc[0]
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.metric("Nomor Atom", unsur["nomor_atom"])
-
-with col2:
-    st.metric("Massa Atom", unsur["massa_atom"])
-
-st.write("*Nama Unsur:*", unsur["nama"])
-
-# ==========================
-# TABEL PERIODIK
-# ==========================
-st.divider()
-st.header("📋 Tabel Periodik")
-
-periodik = [
-["H","","","","","","","","","","","","","","","","","He"],
-["Li","Be","","","","","","","","","","","B","C","N","O","F","Ne"],
-["Na","Mg","","","","","","","","","","","Al","Si","P","S","Cl","Ar"],
-["K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr"],
-["Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe"],
-["Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu",""],
-["Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr",""]
+# Data unsur dasar untuk contoh
+data = [
+    [1, "H", "Hidrogen", 1.008],
+    [6, "C", "Karbon", 12.011],
+    [7, "N", "Nitrogen", 14.007],
+    [8, "O", "Oksigen", 15.999],
+    [11, "Na", "Natrium", 22.990],
+    [17, "Cl", "Klorin", 35.45]
 ]
 
-for baris in periodik:
-    cols = st.columns(18)
-
-    for i, item in enumerate(baris):
-
-        if item != "":
-            if cols[i].button(item, use_container_width=True):
-                hasil = df[df["simbol"] == item]
-
-                if not hasil.empty:
-                    st.session_state["unsur"] = item
-        else:
-            cols[i].write("")
-
-if "unsur" in st.session_state:
-
-    hasil = df[df["simbol"] == st.session_state["unsur"]].iloc[0]
-
-    st.success(
-        f"{hasil['nama']} | "
-        f"Z = {hasil['nomor_atom']} | "
-        f"Ar = {hasil['massa_atom']}"
-    )
-
-# ==========================
-# MASSA MOLAR
-# ==========================
-st.divider()
-st.header("⚖️ Kalkulator Massa Molar")
-
-def hitung_mr(rumus):
-
-    total = 0
-
-    token = re.findall(
-        r'([A-Z][a-z]?)(\d*)',
-        rumus
-    )
-
-    for unsur, jumlah in token:
-
-        jumlah = int(jumlah) if jumlah else 1
-
-        if unsur in Ar:
-            total += Ar[unsur] * jumlah
-
-    return total
-
-rumus_mr = st.text_input(
-    "Masukkan Rumus Kimia",
-    "NaCl"
+df = pd.DataFrame(
+    data,
+    columns=["Nomor Atom", "Simbol", "Nama", "Massa Atom"]
 )
 
-if st.button("Hitung Massa Molar"):
+# Pilih unsur
+st.header("Informasi Unsur")
 
-    mr = hitung_mr(rumus_mr)
-
-    st.success(
-        f"Massa Molar = {mr:.3f} g/mol"
-    )
-
-# ==========================
-# PEMBUATAN LARUTAN
-# ==========================
-st.divider()
-st.header("🧪 Pembuatan Larutan")
-
-rumus = st.text_input(
-    "Rumus Kimia",
-    "NaCl"
+pilih = st.selectbox(
+    "Pilih Unsur",
+    df["Simbol"]
 )
 
-molaritas = st.number_input(
-    "Molaritas (M)",
-    min_value=0.0,
-    value=0.1,
-    step=0.1
-)
+unsur = df[df["Simbol"] == pilih].iloc[0]
 
-volume = st.number_input(
-    "Volume (mL)",
-    min_value=1.0,
-    value=100.0
-)
+st.write(f"*Nama:* {unsur['Nama']}")
+st.write(f"*Nomor Atom:* {unsur['Nomor Atom']}")
+st.write(f"*Massa Atom:* {unsur['Massa Atom']}")
 
-if st.button("Hitung Massa Zat"):
-
-    mr = hitung_mr(rumus)
-
-    massa = mr * molaritas * (volume / 1000)
-
-    st.success(
-        f"Mr = {mr:.3f} g/mol"
-    )
-
-    st.success(
-        f"Massa yang harus ditimbang = {massa:.4f} gram"
-    )
-
-# ==========================
-# DATA UNSUR
-# ==========================
 st.divider()
 
-with st.expander("Lihat Data 118 Unsur"):
-    st.dataframe(
-        df,
-        use_container_width=True
-    )
+# Tabel periodik sederhana
+st.header("Tabel Periodik")
+
+baris1 = st.columns(18)
+baris1[0].button("H")
+baris1[17].button("He")
+
+baris2 = st.columns(18)
+baris2[0].button("Li")
+baris2[1].button("Be")
+baris2[12].button("B")
+baris2[13].button("C")
+baris2[14].button("N")
+baris2[15].button("O")
+baris2[16].button("F")
+baris2[17].button("Ne")
+
+baris3 = st.columns(18)
+baris3[0].button("Na")
+baris3[1].button("Mg")
+baris3[12].button("Al")
+baris3[13].button("Si")
+baris3[14].button("P")
+baris3[15].button("S")
+baris3[16].button("Cl")
+baris3[17].button("Ar")
+
