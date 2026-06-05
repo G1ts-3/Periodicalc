@@ -203,3 +203,11 @@ def hitung_mr(rumus):
             total += daftar_unsur[unsur] * jumlah
 
     return total
+if st.button("Hitung Kebutuhan Zat"):
+
+    mr = hitung_mr(rumus)
+
+    massa = molaritas * (volume / 1000) * mr
+
+    st.success(f"Mr = {mr:.3f}")
+    st.success(f"Massa yang ditimbang = {massa:.4f} gram")
