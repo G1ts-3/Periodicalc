@@ -150,7 +150,7 @@ def hitung_massa_molar(rumus):
         total += Ar[unsur] * jumlah
 
     return total
- st.subheader("Kalkulator Massa Molar")
+st.subheader("Kalkulator Massa Molar")
 
 rumus = st.text_input("Masukkan Rumus Kimia")
 
