@@ -153,12 +153,21 @@ a.pt-search-button:hover{background:color-mix(in srgb, var(--text-color) 12%, tr
     .pt-mobile-list{display:block}
     .pt-title{font-size:1.35rem;margin-bottom:4px}
     .pt-helper{font-size:0.8rem;margin-bottom:10px}
-    .pt-popup{align-items:flex-end}
-    .pt-popup-content{width:100%;max-width:none;max-height:88vh;border-radius:20px 20px 0 0;padding:22px 18px}
-    .pt-detail-header{gap:14px}
-    .pt-detail-symbol{width:70px;height:70px}
-    .pt-detail-name{font-size:1.35em}
-    .pt-detail-grid{grid-template-columns:1fr}
+    .pt-popup{align-items:center; justify-content:center}
+    .pt-popup-content{width:92%; max-width:440px; max-height:82vh; border-radius:18px; padding:18px 16px; box-sizing:border-box}
+    a.pt-popup-close{top:14px; right:14px; width:28px; height:28px}
+    .pt-detail-header{gap:12px; margin-bottom:12px}
+    .pt-detail-symbol{width:52px; height:52px; border-radius:10px}
+    .pt-detail-symbol > span:first-child{font-size:0.62em !important}
+    .pt-detail-symbol > span:last-child{font-size:1.4em !important}
+    .pt-detail-name{font-size:1.25em !important}
+    .pt-detail-sub{font-size:0.8em !important}
+    .pt-detail-divider{margin:10px 0 12px 0 !important}
+    .pt-detail-grid{grid-template-columns:repeat(2, 1fr) !important; gap:6px !important}
+    .pt-detail-card{padding:6px 8px !important; border-radius:6px !important}
+    .pt-detail-label{font-size:0.62em !important; margin-bottom:2px !important}
+    .pt-detail-value{font-size:0.8em !important}
+    .pt-detail-summary{margin-top:10px !important; padding:10px !important; font-size:0.8em !important; line-height:1.4 !important; border-radius:6px !important}
     .pt-search-result-box{align-items:flex-start;flex-direction:column}
     a.pt-search-button{width:100%;text-align:center;box-sizing:border-box}
 }
