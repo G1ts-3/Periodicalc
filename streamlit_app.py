@@ -15,7 +15,7 @@ unsur = df[df["simbol"] == pilih].iloc[0]
 st.write("### Informasi Unsur")
 st.write(f"Nama : {unsur['nama']}")
 st.write(f"Nomor Atom : {unsur['nomor_atom']}")
-st.write(f"Massa Atom : {unsur['massa_atom']}"
+st.write(f"Massa Atom : {unsur['massa_atom']}")
 
  nomor_atom,simbol,nama,massa_atom
 1,H,Hidrogen,1.008
