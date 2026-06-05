@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import re
 
 st.set_page_config(
     page_title="PeriodicCalc",
@@ -191,7 +192,10 @@ def hitung_mr(rumus):
 
     return total
 
-rumus = st.text_input("Rumus Kimia", "NaOH")
+rumus = st.text_input(
+    "Rumus Kimia",
+    value="NaOH"
+)
 
 normalitas = st.number_input(
     "Normalitas (N)",
@@ -205,13 +209,12 @@ volume = st.number_input(
     value=1000.0
 )
 
-valensi = st.number_input(
+valensi = st.selectbox(
     "Valensi",
-    min_value=1,
-    value=1
+    [1, 2, 3, 4, 5, 6]
 )
 
-if st.button("Hitung"):
+if st.button("Hitung Massa"):
 
     Mr = hitung_mr(rumus)
 
@@ -219,6 +222,6 @@ if st.button("Hitung"):
 
     massa = normalitas * (volume / 1000) * BE
 
-    st.success(f"Mr = {Mr:.3f}")
-    st.success(f"BE = {BE:.3f}")
+    st.success(f"Mr = {Mr:.3f} g/mol")
+    st.success(f"BE = {BE:.3f} g/ek")
     st.success(f"Massa yang harus ditimbang = {massa:.4f} gram")
