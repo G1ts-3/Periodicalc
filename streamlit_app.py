@@ -17,7 +17,7 @@ st.write(f"Nama : {unsur['nama']}")
 st.write(f"Nomor Atom : {unsur['nomor_atom']}")
 st.write(f"Massa Atom : {unsur['massa_atom']}")
 
- nomor_atom,simbol,nama,massa_atom
+nomor_atom,simbol, nama, massa_atom
 1,H,Hidrogen,1.008
 2,He,Helium,4.003
 3,Li,Litium,6.94
