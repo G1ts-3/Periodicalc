@@ -1,38 +1,174 @@
+project_kimia/
+│
+├── streamlit_app.py
+│
+├── data/
+│   └── periodic_table.csv
+│
+├── utils/
+│   ├── tabel_periodik.py
+│   └── kalkulator.py
+│
+└── pages/
+    ├── 1_Tabel_Periodik.py
+    ├── 2_Kalkulator_Massa_Molar.py
+    ├── 3_Konversi_Satuan.py
+    └── 4_MSDS.py
+ nomor_atom,simbol,nama,massa_atom
+1,H,Hidrogen,1.008
+2,He,Helium,4.003
+3,Li,Litium,6.94
+4,Be,Berilium,9.012
+5,B,Boron,10.81
+6,C,Karbon,12.011
+7,N,Nitrogen,14.007
+8,O,Oksigen,15.999
+9,F,Fluorin,18.998
+10,Ne,Neon,20.180
+11,Na,Natrium,22.990
+12,Mg,Magnesium,24.305
+13,Al,Aluminium,26.982
+14,Si,Silikon,28.085
+15,P,Fosfor,30.974
+16,S,Sulfur,32.06
+17,Cl,Klorin,35.45
+18,Ar,Argon,39.948
+19,K,Kalium,39.098
+20,Ca,Kalsium,40.078
+21,Sc,Skandium,44.956
+22,Ti,Titanium,47.867
+23,V,Vanadium,50.942
+24,Cr,Kromium,51.996
+25,Mn,Mangan,54.938
+26,Fe,Besi,55.845
+27,Co,Kobalt,58.933
+28,Ni,Nikel,58.693
+29,Cu,Tembaga,63.546
+30,Zn,Seng,65.38
+31,Ga,Galium,69.723
+32,Ge,Germanium,72.630
+33,As,Arsen,74.922
+34,Se,Selenium,78.971
+35,Br,Bromin,79.904
+36,Kr,Kripton,83.798
+37,Rb,Rubidium,85.468
+38,Sr,Stronsium,87.62
+39,Y,Yitrium,88.906
+40,Zr,Zirkonium,91.224
+41,Nb,Niobium,92.906
+42,Mo,Molibdenum,95.95
+43,Tc,Teknesium,98
+44,Ru,Rutenium,101.07
+45,Rh,Rodium,102.91
+46,Pd,Paladium,106.42
+47,Ag,Perak,107.87
+48,Cd,Kadmium,112.41
+49,In,Indium,114.82
+50,Sn,Timah,118.71
+51,Sb,Antimon,121.76
+52,Te,Telurium,127.60
+53,I,Iodin,126.90
+54,Xe,Xenon,131.29
+55,Cs,Sesium,132.91
+56,Ba,Barium,137.33
+57,La,Lantanum,138.91
+58,Ce,Cerium,140.12
+59,Pr,Praseodimium,140.91
+60,Nd,Neodimium,144.24
+61,Pm,Prometium,145
+62,Sm,Samarium,150.36
+63,Eu,Europium,151.96
+64,Gd,Gadolinium,157.25
+65,Tb,Terbium,158.93
+66,Dy,Disprosium,162.50
+67,Ho,Holmium,164.93
+68,Er,Erbium,167.26
+69,Tm,Tulium,168.93
+70,Yb,Ytterbium,173.05
+71,Lu,Lutesium,174.97
+72,Hf,Hafnium,178.49
+73,Ta,Tantalum,180.95
+74,W,Tungsten,183.84
+75,Re,Rhenium,186.21
+76,Os,Osmium,190.23
+77,Ir,Iridium,192.22
+78,Pt,Platina,195.08
+79,Au,Emas,196.97
+80,Hg,Merkuri,200.59
+81,Tl,Talium,204.38
+82,Pb,Timbal,207.2
+83,Bi,Bismut,208.98
+84,Po,Polonium,209
+85,At,Astatin,210
+86,Rn,Radon,222
+87,Fr,Fransium,223
+88,Ra,Radium,226
+89,Ac,Aktinium,227
+90,Th,Torium,232.04
+91,Pa,Protaktinium,231.04
+92,U,Uranium,238.03
+93,Np,Neptunium,237
+94,Pu,Plutonium,244
+95,Am,Amerisium,243
+96,Cm,Kurium,247
+97,Bk,Berkelium,247
+98,Cf,Kalifornium,251
+99,Es,Einsteinium,252
+100,Fm,Fermium,257
+101,Md,Mendelevium,258
+102,No,Nobelium,259
+103,Lr,Lawrensium,266
+104,Rf,Rutherfordium,267
+105,Db,Dubnium,268
+106,Sg,Seaborgium,269
+107,Bh,Bohrium,270
+108,Hs,Hassium,277
+109,Mt,Meitnerium,278
+110,Ds,Darmstadtium,281
+111,Rg,Roentgenium,282
+112,Cn,Kopernisium,285
+113,Nh,Nihonium,286
+114,Fl,Flerovium,289
+115,Mc,Moskovium,290
+116,Lv,Livermorium,293
+117,Ts,Tennessine,294
+118,Og,Oganesson,294
+import pandas as pd
 import streamlit as st
-from utils.tabel_periodik_118 import elemen_periodik, Ar_tiap_unsur
-def tampilkan_tabel_periodik(filter_golongan=None):
- for baris in elemen_periodik:
- kolom = st.columns(len(baris))
- for i, elemen in enumerate(baris):
- simbol = elemen.get("simbol", "")
- golongan = elemen.get("golongan", "lainnya")
- if simbol and (filter_golongan is None or golongan == filter_golongan):
- Ar = Ar_tiap_unsur.get(simbol, "")
- label = f"{simbol}"
- tooltip = f"{simbol} (Ar = {Ar})" if Ar else simbol
- if kolom[i].button(label, help=tooltip, key=f"{simbol}_{i}", use_container_width=True):
- if "selected_elements" not in st.session_state:
- st.session_state.selected_elements = []
- if len(st.session_state.selected_elements) < 2 and simbol not in 
-st.session_state.selected_elements:
- st.session_state.selected_elements.append(simbol)
- else:
- kolom[i].markdown(" ")
-massa_atom = {"H": 1.01, "He": 4.00, "Li": 6.94, "Be": 9.01, "B": 10.81, "C": 12.01, "N": 14.01, "O": 16.00, "F": 19.00,"Ne": 20.18,"Na": 22.99, "Mg": 24.31, "Al": 26.98, "Si": 28.09, "P": 30.97, "S": 32.07, "Cl": 35.45, "Ar": 39.95, "K": 39.10, "Ca": 40.08, "Sc": 44.96, "Ti": 47.87, "V": 50.94, "Cr": 52.00, "Mn": 54.94, "Fe": 55.85, "Co": 58.93, "Ni": 58.69, "Cu": 63.55, "Zn": 65.38, "Ga": 69.72, "Ge": 72.63, "As": 74.92, "Se": 78.97,"Br": 79.90, "Kr": 83.80, "Rb": 85.47, "Sr": 87.62, "Y": 88.91, "Zr": 91.22, "Nb": 92.91, "Mo": 95.95,"Tc": 98.00, "Ru": 101.1, "Rh": 102.9, "Pd": 106.4, "Ag": 107.9, "Cd": 112.4, "In": 114.8, "Sn": 118.7,"Sb": 121.8, "Te": 127.6, "I": 126.9, "Xe": 131.3, "Cs": 132.9, "Ba": 137.3, "La": 138.9, "Ce": 140.1,"Pr": 140.9, "Nd": 144.2, "Pm": 145.0, "Sm": 150.4, "Eu": 152.0, "Gd": 157.3, "Tb": 158.9, "Dy": 162.5,"Ho": 164.9, "Er": 167.3, "Tm": 168.9, "Yb": 173.0, "Lu": 175.0, "Hf": 178.5, "Ta": 180.9, "W": 183.8,"Re": 186.2, "Os": 190.2, "Ir": 192.2, "Pt": 195.1, "Au": 197.0, "Hg": 200.6, "Tl": 204.4, "Pb": 207.2,"Bi": 208.9, "Po": 209.0, "At": 210.0, "Rn": 222.0, "Fr": 223.0, "Ra": 226.0, "Ac": 227.0, "Th": 232.0,"Pa": 231.0, "U": 238.0, "Np": 237.0, "Pu": 244.0, "Am": 243.0, "Cm": 247.0, "Bk": 247.0, "Cf": 251.0,"Es": 252.0, "Fm": 257.0, "Md": 258.0, "No": 259.0, "Lr": 262.0, "Rf": 267.0, "Db": 270.0, "Sg": 271.0,"Bh": 270.0, "Hs": 277.0, "Mt": 276.0, "Ds": 281.0, "Rg": 280.0, "Cn": 285.0, "Nh": 284.0, "Fl": 289.0,"Mc": 288.0, "Lv": 293.0, "Ts": 294.0, "Og": 294.0}
-elemen_periodik = 
- # Baris 1
- [{"simbol": "H", "golongan": "nonlogam"}] + [{}]*16 + [{"simbol": "He", "golongan": "gas mulia"}],
- # Baris 2
- [{"simbol": "Li", "golongan": "logam alkali"},{"simbol": "Be", "golongan": "logam alkali tanah"}] + [{}]*10 + [{"simbol": "B", "golongan": "metaloid"},{"simbol": "C", "golongan": "nonlogam"},{"simbol": "N", "golongan": "nonlogam"},{"simbol": "O", "golongan": "nonlogam"},{"simbol": "F", "golongan": "halogen"},{"simbol": "Ne", "golongan": "gas mulia"}],
- 
- # Baris 3
- [{"simbol": "Na", "golongan": "logam alkali"},{"simbol": "Mg", "golongan": "logam alkali tanah"}] + [{}]*10 +[{"simbol": "Al", "golongan": "logam pasca transisi"},{"simbol": "Si", "golongan": "metaloid"},{"simbol": "P", "golongan": "nonlogam"},{"simbol": "S", "golongan": "nonlogam"},{"simbol": "Cl", "golongan": "halogen"}, {"simbol": "Ar", "golongan": "gas mulia"}],
- # Baris 4
- [{"simbol": "K", "golongan": "logam alkali"}, {"simbol": "Ca", "golongan": "logam alkali tanah"},{"simbol": "Sc", "golongan": "logam transisi"},{"simbol": "Ti", "golongan": "logam transisi"},{"simbol": "V", "golongan": "logam transisi"},{"simbol": "Cr", "golongan": "logam transisi"},{"simbol": "Mn", "golongan": "logam transisi"},{"simbol": "Fe", "golongan": "logam transisi"},{"simbol": "Co", "golongan": "logam transisi"},{"simbol": "Ni", "golongan": "logam transisi"},{"simbol": "Cu", "golongan": "logam transisi"},{"simbol": "Zn", "golongan": "logam transisi"},{"simbol": "Ga", "golongan": "logam pasca transisi"},{"simbol": "Ge", "golongan": "metaloid"},{"simbol": "As", "golongan": "metaloid"},{"simbol": "Se", "golongan": "nonlogam"},{"simbol": "Br", "golongan": "halogen"},{"simbol": "Kr", "golongan": "gas mulia"}],
- # Baris 5
- [{"simbol": "Rb", "golongan": "logam alkali"},{"simbol": "Sr", "golongan": "logam alkali tanah"},{"simbol": "Y", "golongan": "logam transisi"},{"simbol": "Zr", "golongan": "logam transisi"},{"simbol": "Nb", "golongan": "logam transisi"},{"simbol": "Mo", "golongan": "logam transisi"},{"simbol": "Tc", "golongan": "logam transisi"},{"simbol": "Ru", "golongan": "logam transisi"},{"simbol": "Rh", "golongan": "logam transisi"},{"simbol": "Pd", "golongan": "logam transisi"},{"simbol": "Ag", "golongan": "logam transisi"},{"simbol": "Cd", "golongan": "logam transisi"},{"simbol": "In", "golongan": "logam pasca transisi"},{"simbol": "Sn", "golongan": "logam pasca transisi"}, {"simbol": "Sb", "golongan": "metaloid"},{"simbol": "Te", "golongan": "metaloid"},{"simbol": "I", "golongan": "halogen"},{"simbol": "Xe", "golongan": "gas mulia"}],
- # Baris 6
- [{"simbol": "Cs", "golongan": "logam alkali"}, {"simbol": "Ba", "golongan": "logam alkali tanah"}] +[{"simbol": ""}] * 2 + [{"simbol": "La", "golongan": "lanthanida"},{"simbol": "Ce", "golongan": "lanthanida"},{"simbol": "Pr", "golongan": "lanthanida"},{"simbol": "Nd", "golongan": "lanthanida"},{"simbol": "Pm", "golongan": "lanthanida"},{"simbol": "Sm", "golongan": "lanthanida"},{"simbol": "Eu", "golongan": "lanthanida"}, {"simbol": "Gd", "golongan": "lanthanida"},{"simbol": "Tb", "golongan": "lanthanida"},{"simbol": "Dy", "golongan": "lanthanida"},{"simbol": "Ho", "golongan": "lanthanida"},{"simbol": "Er", "golongan": "lanthanida"},{"simbol": "Tm", "golongan": "lanthanida"},{"simbol": "Yb", "golongan": "lanthanida"},{"simbol": "Lu", "golongan": "lanthanida"}] +[{"simbol": "Hf", "golongan": "logam transisi"},{"simbol": "Ta", "golongan": "logam transisi"},{"simbol": "W", "golongan": "logam transisi"},{"simbol": "Re", "golongan": "logam transisi"},{"simbol": "Os", "golongan": "logam transisi"},{"simbol": "Ir", "golongan": "logam transisi"},{"simbol": "Pt", "golongan": "logam transisi"},{"simbol": "Au", "golongan": "logam transisi"},{"simbol": "Hg", "golongan": "logam transisi"},{"simbol": "Tl", "golongan": "logam pasca transisi"},{"simbol": "Pb", "golongan": "logam pasca transisi"},{"simbol": "Bi", "golongan": "logam pasca transisi"},{"simbol": "Po", "golongan": "metaloid"},{"simbol": "At", "golongan": "halogen"},{"simbol": "Rn", "golongan": "gas mulia"}],
-# Baris 7
- [{"simbol": "Fr", "golongan": "logam alkali"}, {"simbol": "Ra", "golongan": "logam alkali tanah"}]+[{"simbol": ""}] * 2 + [{"simbol": "Ac", "golongan": "aktinida"},{"simbol": "Th", "golongan": "aktinida"},{"simbol": "Pa", "golongan": "aktinida"},{"simbol": "U", "golongan": "aktinida"},{"simbol": "Np", "golongan": "aktinida"},{"simbol": "Pu", "golongan": "aktinida"},{"simbol": "Am", "golongan": "aktinida"},{"simbol": "Cm", "golongan": "aktinida"},{"simbol": "Bk", "golongan": "aktinida"},{"simbol": "Cf", "golongan": "aktinida"},{"simbol": "Es", "golongan": "aktinida"},{"simbol": "Fm", "golongan": "aktinida"},{"simbol": "Md", "golongan": "aktinida"},{"simbol": "No", "golongan": "aktinida"},{"simbol": "Lr", "golongan": "aktinida"}]+[{"simbol": "Rf", "golongan": "logam transisi"},{"simbol": "Db", "golongan": "logam transisi"},{"simbol": "Sg", "golongan": "logam transisi"},{"simbol": "Bh", "golongan": "logam transisi"},{"simbol": "Hs", "golongan": "logam transisi"},{"simbol": "Mt", "golongan": "logam transisi"},{"simbol": "Ds", "golongan": "logam transisi"},{"simbol": "Rg", "golongan": "logam transisi"},{"simbol": "Cn", "golongan": "logam transisi"},{"simbol": "Nh", "golongan": "logam pasca transisi"},{"simbol": "Fl", "golongan": "logam pasca transisi"},{"simbol": "Mc", "golongan": "logam pasca transisi"},{"simbol": "Lv", "golongan": "logam pasca transisi"},{"simbol": "Ts", "golongan": "halogen"},{"simbol": "Og", "golongan": "gas mulia"}]]
-Ar_tiap_unsur = massa_atom
+
+df = pd.read_csv("data/periodic_table.csv")
+
+st.title("Tabel Periodik Unsur")
+
+pilih = st.selectbox(
+    "Pilih Unsur",
+    df["simbol"]
+)
+
+unsur = df[df["simbol"] == pilih].iloc[0]
+
+st.write("### Informasi Unsur")
+st.write(f"Nama : {unsur['nama']}")
+st.write(f"Nomor Atom : {unsur['nomor_atom']}")
+st.write(f"Massa Atom : {unsur['massa_atom']}")
+import re
+
+Ar = dict(zip(df["simbol"], df["massa_atom"]))
+
+def hitung_massa_molar(rumus):
+    total = 0
+
+    token = re.findall(r'([A-Z][a-z]?)(\d*)', rumus)
+
+    for unsur, jumlah in token:
+        jumlah = int(jumlah) if jumlah else 1
+        total += Ar[unsur] * jumlah
+
+    return total
+ st.subheader("Kalkulator Massa Molar")
+
+rumus = st.text_input("Masukkan Rumus Kimia")
+
+if rumus:
+    mm = hitung_massa_molar(rumus)
+    st.success(f"Massa Molar = {mm:.3f} g/mol")
