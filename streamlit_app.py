@@ -1,19 +1,22 @@
-project_kimia/
-│
-├── streamlit_app.py
-│
-├── data/
-│   └── periodic_table.csv
-│
-├── utils/
-│   ├── tabel_periodik.py
-│   └── kalkulator.py
-│
-└── pages/
-    ├── 1_Tabel_Periodik.py
-    ├── 2_Kalkulator_Massa_Molar.py
-    ├── 3_Konversi_Satuan.py
-    └── 4_MSDS.py
+import streamlit as st
+import pandas as pd
+
+st.title("Tabel Periodik Unsur")
+
+df = pd.read_csv("data/periodic_table.csv")
+
+pilih = st.selectbox(
+    "Pilih Unsur",
+    df["simbol"]
+)
+
+unsur = df[df["simbol"] == pilih].iloc[0]
+
+st.write("### Informasi Unsur")
+st.write(f"Nama : {unsur['nama']}")
+st.write(f"Nomor Atom : {unsur['nomor_atom']}")
+st.write(f"Massa Atom : {unsur['massa_atom']}"
+
  nomor_atom,simbol,nama,massa_atom
 1,H,Hidrogen,1.008
 2,He,Helium,4.003
@@ -133,24 +136,6 @@ project_kimia/
 116,Lv,Livermorium,293
 117,Ts,Tennessine,294
 118,Og,Oganesson,294
-import pandas as pd
-import streamlit as st
-
-df = pd.read_csv("data/periodic_table.csv")
-
-st.title("Tabel Periodik Unsur")
-
-pilih = st.selectbox(
-    "Pilih Unsur",
-    df["simbol"]
-)
-
-unsur = df[df["simbol"] == pilih].iloc[0]
-
-st.write("### Informasi Unsur")
-st.write(f"Nama : {unsur['nama']}")
-st.write(f"Nomor Atom : {unsur['nomor_atom']}")
-st.write(f"Massa Atom : {unsur['massa_atom']}")
 import re
 
 Ar = dict(zip(df["simbol"], df["massa_atom"]))
