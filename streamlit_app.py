@@ -781,10 +781,9 @@ elif menu == "🧪 Pembuatan Larutan":
                         "\n".join([
                             f"1. Timbang {format_decimal(massa, 3)} gram {compound}.",
                             "2. Masukkan zat ke dalam gelas kimia atau labu ukur.",
-                            "3. Tambahkan aquades secukupnya sampai zat larut.",
-                            f"4. Pindahkan ke labu ukur {format_decimal(V, 2).rstrip('0').rstrip(',')} mL.",
-                            "5. Tambahkan aquades sampai tanda batas.",
-                            "6. Homogenkan larutan.",
+                            "3. Tambahkan aquadest secukupnya untuk melarutkan zat.",
+                            f"4. Tambahkan aquadest hingga tanda tera atau sampai volume {format_decimal(V, 2).rstrip('0').rstrip(',')} mL.",
+                            "5. Homogenkan larutan."
                         ])
                     )
                 except ValueError as exc:
@@ -897,10 +896,9 @@ elif menu == "🧪 Pembuatan Larutan":
                         "\n".join([
                             f"1. Timbang {format_decimal(massa, 3)} gram {compound}.",
                             "2. Masukkan zat ke dalam gelas kimia atau labu ukur.",
-                            "3. Tambahkan aquades secukupnya sampai zat larut.",
-                            f"4. Pindahkan ke labu ukur {format_decimal(V2, 2).rstrip('0').rstrip(',')} mL.",
-                            "5. Tambahkan aquades sampai tanda batas.",
-                            "6. Homogenkan larutan.",
+                            "3. Tambahkan aquadest secukupnya untuk melarutkan zat.",
+                            f"4. Tambahkan aquadest hingga tanda tera atau sampai volume {format_decimal(V2, 2).rstrip('0').rstrip(',')} mL.",
+                            "5. Homogenkan larutan."
                         ])
                     )
                 except ValueError as exc:
@@ -917,42 +915,104 @@ elif menu == "💧 Pengenceran":
         r"M_1V_1=M_2V_2"
     )
 
-    M1 = st.number_input(
-        "M1",
-        min_value=0.0
-    )
+    # Menggunakan Streamlit tabs
+    tab1, tab2 = st.tabs(["Hitung V1", "Hitung M1"])
 
-    M2 = st.number_input(
-        "M2",
-        min_value=0.0
-    )
+    # --- TAB 1: HITUNG V1 ---
+    with tab1:
+        st.subheader("Hitung Volume Awal (V1)")
+        M1 = st.number_input(
+            "Konsentrasi Awal / Stok (M1)",
+            min_value=0.0,
+            key="dilution_m1",
+            format="%.4f"
+        )
+        M2 = st.number_input(
+            "Konsentrasi Akhir (M2)",
+            min_value=0.0,
+            key="dilution_m2_v1",
+            format="%.4f"
+        )
+        V2 = st.number_input(
+            "Volume Akhir (V2) (mL)",
+            min_value=0.0,
+            key="dilution_v2_v1",
+            format="%.2f"
+        )
 
-    V2 = st.number_input(
-        "V2 (mL)",
-        min_value=0.1
-    )
+        if st.button("Hitung V1", key="btn_calc_v1"):
+            if M1 <= 0:
+                st.error("M1 (konsentrasi awal) harus lebih besar dari 0.")
+            elif M2 <= 0:
+                st.error("M2 (konsentrasi akhir) harus lebih besar dari 0.")
+            elif V2 <= 0:
+                st.error("V2 (volume akhir) harus lebih besar dari 0.")
+            else:
+                V1 = (M2 * V2) / M1
+                
+                # Cek warning tetapi tetap lakukan perhitungan
+                if M2 > M1:
+                    st.warning("Konsentrasi akhir lebih besar dari konsentrasi awal. Ini bukan proses pengenceran.")
+                
+                st.success(f"V1 = {format_decimal(V1, 2)} mL")
+                
+                # Output hasil dalam tabel sederhana
+                st.table(make_result_table([
+                    ["Konsentrasi Awal (M1)", f"{format_decimal(M1, 4)} M"],
+                    ["Konsentrasi Akhir (M2)", f"{format_decimal(M2, 4)} M"],
+                    ["Volume Akhir (V2)", f"{format_decimal(V2, 2)} mL"],
+                    ["Volume Dipipet (V1)", f"{format_decimal(V1, 2)} mL"],
+                ]))
+                
+                st.info(f"Ambil {format_decimal(V1, 2)} mL larutan stok, lalu tambahkan pelarut sampai volume akhir {format_decimal(V2, 2)} mL.")
 
-    if st.button(
-        "Hitung V1"
-    ):
-        if M1 <= 0:
-            st.error("M1 (konsentrasi awal) harus lebih besar dari 0.")
-        elif M2 <= 0:
-            st.error("M2 (konsentrasi akhir) harus lebih besar dari 0.")
-        elif V2 <= 0:
-            st.error("V2 (volume akhir) harus lebih besar dari 0.")
-        elif M2 > M1:
-            st.warning(
-                "⚠️ Konsentrasi akhir (M2) lebih besar dari konsentrasi awal (M1). "
-                "Ini bukan proses pengenceran."
-            )
-        else:
-            V1 = (M2 * V2) / M1
+    # --- TAB 2: HITUNG M1 ---
+    with tab2:
+        st.subheader("Hitung Konsentrasi Awal (M1)")
+        V1_m1 = st.number_input(
+            "Volume Awal / Stok (V1) (mL)",
+            min_value=0.0,
+            key="dilution_v1_m1",
+            format="%.2f"
+        )
+        M2_m1 = st.number_input(
+            "Konsentrasi Akhir (M2)",
+            min_value=0.0,
+            key="dilution_m2_m1",
+            format="%.4f"
+        )
+        V2_m1 = st.number_input(
+            "Volume Akhir (V2) (mL)",
+            min_value=0.0,
+            key="dilution_v2_m1",
+            format="%.2f"
+        )
 
-            st.success(
-                f"V1 = {V1:.2f} mL"
-            )
-
-            st.info(
-                f"Tambahkan pelarut hingga volume akhir {V2:.2f} mL"
-            )
+        if st.button("Hitung M1", key="btn_calc_m1"):
+            if V1_m1 <= 0:
+                st.error("V1 (volume awal) harus lebih besar dari 0.")
+            elif M2_m1 <= 0:
+                st.error("M2 (konsentrasi akhir) harus lebih besar dari 0.")
+            elif V2_m1 <= 0:
+                st.error("V2 (volume akhir) harus lebih besar dari 0.")
+            else:
+                M1_calc = (M2_m1 * V2_m1) / V1_m1
+                
+                # Cek warning tetapi tetap lakukan perhitungan
+                if V1_m1 > V2_m1:
+                    st.warning("V1 lebih besar dari V2. Pada pengenceran, volume larutan stok biasanya tidak lebih besar dari volume akhir.")
+                
+                if M1_calc < M2_m1:
+                    st.warning("M1 lebih kecil dari M2. Ini tidak sesuai konsep pengenceran karena larutan awal seharusnya lebih pekat.")
+                
+                st.success(f"M1 = {format_decimal(M1_calc, 4)} M")
+                
+                # Output hasil dalam tabel sederhana
+                st.table(make_result_table([
+                    ["Volume Awal / Stok (V1)", f"{format_decimal(V1_m1, 2)} mL"],
+                    ["Konsentrasi Akhir (M2)", f"{format_decimal(M2_m1, 4)} M"],
+                    ["Volume Akhir (V2)", f"{format_decimal(V2_m1, 2)} mL"],
+                    ["Konsentrasi Stok (M1)", f"{format_decimal(M1_calc, 4)} M"],
+                ]))
+                
+                st.info(f"Dibutuhkan larutan stok dengan konsentrasi {format_decimal(M1_calc, 4)} M. Ambil {format_decimal(V1_m1, 2)} mL larutan stok, lalu encerkan sampai volume akhir {format_decimal(V2_m1, 2)} mL.")
