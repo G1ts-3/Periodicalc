@@ -922,7 +922,7 @@ elif menu == "💧 Pengenceran":
     with tab1:
         st.subheader("Hitung Volume Awal (V1)")
         M1 = st.number_input(
-            "Konsentrasi Awal / Stok (M1)",
+            "Konsentrasi Awal (M1)",
             min_value=0.0,
             key="dilution_m1",
             format="%.4f"
@@ -970,7 +970,7 @@ elif menu == "💧 Pengenceran":
     with tab2:
         st.subheader("Hitung Konsentrasi Awal (M1)")
         V1_m1 = st.number_input(
-            "Volume Awal / Stok (V1) (mL)",
+            "Volume Awal (V1) (mL)",
             min_value=0.0,
             key="dilution_v1_m1",
             format="%.2f"
@@ -1009,10 +1009,10 @@ elif menu == "💧 Pengenceran":
                 
                 # Output hasil dalam tabel sederhana
                 st.table(make_result_table([
-                    ["Volume Awal / Stok (V1)", f"{format_decimal(V1_m1, 2)} mL"],
+                    ["Volume Awal  (V1)", f"{format_decimal(V1_m1, 2)} mL"],
                     ["Konsentrasi Akhir (M2)", f"{format_decimal(M2_m1, 4)} M"],
                     ["Volume Akhir (V2)", f"{format_decimal(V2_m1, 2)} mL"],
-                    ["Konsentrasi Stok (M1)", f"{format_decimal(M1_calc, 4)} M"],
+                    ["Konsentrasi (M1)", f"{format_decimal(M1_calc, 4)} M"],
                 ]))
                 
                 st.info(f"Dibutuhkan larutan stok dengan konsentrasi {format_decimal(M1_calc, 4)} M. Ambil {format_decimal(V1_m1, 2)} mL larutan stok, lalu encerkan sampai volume akhir {format_decimal(V2_m1, 2)} mL.")
