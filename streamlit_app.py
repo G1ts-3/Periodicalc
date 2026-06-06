@@ -964,7 +964,7 @@ elif menu == "💧 Pengenceran":
                     ["Volume Dipipet (V1)", f"{format_decimal(V1, 2)} mL"],
                 ]))
                 
-                st.info(f"Ambil {format_decimal(V1, 2)} mL larutan stok, lalu tambahkan pelarut sampai volume akhir {format_decimal(V2, 2)} mL.")
+                st.info(f"Ambil {format_decimal(V1, 2)} mL larutan, lalu tambahkan pelarut sampai volume akhir {format_decimal(V2, 2)} mL.")
 
     # --- TAB 2: HITUNG M1 ---
     with tab2:
@@ -1000,7 +1000,7 @@ elif menu == "💧 Pengenceran":
                 
                 # Cek warning tetapi tetap lakukan perhitungan
                 if V1_m1 > V2_m1:
-                    st.warning("V1 lebih besar dari V2. Pada pengenceran, volume larutan stok biasanya tidak lebih besar dari volume akhir.")
+                    st.warning("V1 lebih besar dari V2. Pada pengenceran, volume larutan biasanya tidak lebih besar dari volume akhir.")
                 
                 if M1_calc < M2_m1:
                     st.warning("M1 lebih kecil dari M2. Ini tidak sesuai konsep pengenceran karena larutan awal seharusnya lebih pekat.")
@@ -1015,4 +1015,4 @@ elif menu == "💧 Pengenceran":
                     ["Konsentrasi (M1)", f"{format_decimal(M1_calc, 4)} M"],
                 ]))
                 
-                st.info(f"Dibutuhkan larutan stok dengan konsentrasi {format_decimal(M1_calc, 4)} M. Ambil {format_decimal(V1_m1, 2)} mL larutan stok, lalu encerkan sampai volume akhir {format_decimal(V2_m1, 2)} mL.")
+                st.info(f"Dibutuhkan larutan dengan konsentrasi {format_decimal(M1_calc, 4)} M. Ambil {format_decimal(V1_m1, 2)} mL larutan stok, lalu encerkan sampai volume akhir {format_decimal(V2_m1, 2)} mL.")
