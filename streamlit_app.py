@@ -850,7 +850,6 @@ elif menu == "🧪 Pembuatan Larutan":
         )
         st.caption(
             "ℹ️ Valensi bergantung pada jenis reaksi atau senyawa yang digunakan. "
-            "Jika ragu, tanyakan ke guru/dosen atau gunakan nilai yang diberikan pada soal."
         )
 
         V2 = st.number_input(
