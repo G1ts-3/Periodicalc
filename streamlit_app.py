@@ -782,7 +782,7 @@ elif menu == "🧪 Pembuatan Larutan":
                             f"1. Timbang {format_decimal(massa, 3)} gram {compound}.",
                             "2. Masukkan zat ke dalam gelas kimia atau labu ukur.",
                             "3. Tambahkan aquadest secukupnya untuk melarutkan zat.",
-                            f"4. Tambahkan aquadest hingga tanda tera atau sampai volume {format_decimal(V, 2).rstrip('0').rstrip(',')} mL.",
+                            f"4. Tambahkan aquadest hingga tanda tera atau hingga volume {format_decimal(V, 2).rstrip('0').rstrip(',')} mL.",
                             "5. Homogenkan larutan."
                         ])
                     )
@@ -897,7 +897,7 @@ elif menu == "🧪 Pembuatan Larutan":
                             f"1. Timbang {format_decimal(massa, 3)} gram {compound}.",
                             "2. Masukkan zat ke dalam gelas kimia atau labu ukur.",
                             "3. Tambahkan aquadest secukupnya untuk melarutkan zat.",
-                            f"4. Tambahkan aquadest hingga tanda tera atau sampai volume {format_decimal(V2, 2).rstrip('0').rstrip(',')} mL.",
+                            f"4. Tambahkan aquadest hingga tanda tera atau hingga volume {format_decimal(V2, 2).rstrip('0').rstrip(',')} mL.",
                             "5. Homogenkan larutan."
                         ])
                     )
@@ -964,7 +964,7 @@ elif menu == "💧 Pengenceran":
                     ["Volume Dipipet (V1)", f"{format_decimal(V1, 2)} mL"],
                 ]))
                 
-                st.info(f"Ambil {format_decimal(V1, 2)} mL larutan, lalu tambahkan pelarut sampai volume akhir {format_decimal(V2, 2)} mL.")
+                st.info(f"Di Ambil {format_decimal(V1, 2)} mL larutan, lalu tambahkan pelarut hingga volume akhir {format_decimal(V2, 2)} mL.")
 
     # --- TAB 2: HITUNG M1 ---
     with tab2:
@@ -1015,4 +1015,4 @@ elif menu == "💧 Pengenceran":
                     ["Konsentrasi (M1)", f"{format_decimal(M1_calc, 4)} M"],
                 ]))
                 
-                st.info(f"Dibutuhkan larutan dengan konsentrasi {format_decimal(M1_calc, 4)} M. Ambil {format_decimal(V1_m1, 2)} mL larutan stok, lalu encerkan sampai volume akhir {format_decimal(V2_m1, 2)} mL.")
+                st.info(f"Dibutuhkan larutan dengan konsentrasi {format_decimal(M1_calc, 4)} M. Ambil {format_decimal(V1_m1, 2)} mL larutan stok, kemudian encerkan hingga volume akhir {format_decimal(V2_m1, 2)} mL.")
