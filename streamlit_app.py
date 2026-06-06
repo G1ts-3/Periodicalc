@@ -964,7 +964,7 @@ elif menu == "💧 Pengenceran":
                     ["Volume Dipipet (V1)", f"{format_decimal(V1, 2)} mL"],
                 ]))
                 
-                st.info(f"Di Ambil {format_decimal(V1, 2)} mL larutan, lalu tambahkan pelarut hingga volume akhir {format_decimal(V2, 2)} mL.")
+                st.info(f"Diambil {format_decimal(V1, 2)} mL larutan, kemudian tambahkan pelarut hingga volume akhir {format_decimal(V2, 2)} mL.")
 
     # --- TAB 2: HITUNG M1 ---
     with tab2:
@@ -1015,4 +1015,4 @@ elif menu == "💧 Pengenceran":
                     ["Konsentrasi (M1)", f"{format_decimal(M1_calc, 4)} M"],
                 ]))
                 
-                st.info(f"Dibutuhkan larutan dengan konsentrasi {format_decimal(M1_calc, 4)} M. Ambil {format_decimal(V1_m1, 2)} mL larutan stok, kemudian encerkan hingga volume akhir {format_decimal(V2_m1, 2)} mL.")
+                st.info(f"Dibutuhkan larutan dengan konsentrasi {format_decimal(M1_calc, 4)} M. Diambil {format_decimal(V1_m1, 2)} mL larutan stok, kemudian encerkan hingga volume akhir {format_decimal(V2_m1, 2)} mL.")
