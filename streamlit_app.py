@@ -5,7 +5,7 @@ import re
 from html import escape
 
 st.set_page_config(
-    page_title="ChemLab",
+    page_title="Periodicalc",
     page_icon="⚛️",
     layout="wide"
 )
@@ -391,6 +391,7 @@ def make_mr_detail_table(details):
 menu = st.sidebar.radio(
     "Menu",
     [
+        "🏠 Beranda",
         "⚛️ Tabel Periodik",
         "🧪 Pembuatan Larutan",
         "💧 Pengenceran"
@@ -398,9 +399,40 @@ menu = st.sidebar.radio(
 )
 
 # ==========================
+# BERANDA
+# ==========================
+if menu == "🏠 Beranda":
+
+    st.title("⚛️ Periodicalc")
+    st.write(
+        "Periodicalc adalah aplikasi berbasis Python dan Streamlit yang membantu pengguna "
+        "memahami tabel periodik, pembuatan larutan, dan pengenceran larutan."
+    )
+
+    st.divider()
+
+    st.subheader("📋 Tabel Periodik")
+    st.write("Tabel periodik adalah susunan unsur-unsur kimia yang diurutkan berdasarkan nomor atom, konfigurasi elektron, dan kesamaan sifat kimianya. Tabel ini menjadi \"peta\" standar untuk melihat hubungan antar unsur dan memprediksi sifat unsur yang belum ditemukan.")
+
+    st.subheader("🧪 Pembuatan Larutan")
+    st.write("Pembuatan larutan adalah proses mencampurkan zat terlarut (solut) ke dalam pelarut (solven) untuk menghasilkan campuran homogen dengan konsentrasi yang diinginkan.")
+
+    st.subheader("💧 Pengenceran")
+    st.write("Pengenceran larutan adalah proses penurunan konsentrasi suatu larutan dengan cara menambahkan zat pelarut (seperti air) ke dalam larutan yang pekat. Walaupun volume total larutan bertambah dan konsentrasinya menurun, jumlah zat terlarut di dalamnya akan tetap sama.")
+
+    st.divider()
+
+    st.subheader("👥 Anggota Kelompok 5")
+    st.write("1. Fani Aulia Nurfauziah (2560626)")
+    st.write("2. Fanny Arrahmah Khaerunnisa (2560627)")
+    st.write("3. Mawaddah Dwita Pebyana (2560668)")
+    st.write("4. Naila Syafitri Ramadhani (2560703)")
+    st.write("5. Najma Faiza Khairiah (2560706)")
+
+# ==========================
 # TABEL PERIODIK
 # ==========================
-if menu == "⚛️ Tabel Periodik":
+elif menu == "⚛️ Tabel Periodik":
 
     df, _local_mode = load_elements()
     if _local_mode:
@@ -442,8 +474,50 @@ if menu == "⚛️ Tabel Periodik":
             return "&mdash;"
         return escape(f"{val} {unit}".strip(), quote=True)
 
+    # Terjemahan kategori ke Bahasa Indonesia
+    category_id = {
+        "alkali metal": "Logam Alkali",
+        "alkaline earth metal": "Logam Alkali Tanah",
+        "transition metal": "Logam Transisi",
+        "post-transition metal": "Logam Pasca-Transisi",
+        "metalloid": "Metaloid",
+        "nonmetal": "Nonlogam",
+        "diatomic nonmetal": "Nonlogam Diatomik",
+        "polyatomic nonmetal": "Nonlogam Poliatomik",
+        "halogen": "Halogen",
+        "noble gas": "Gas Mulia",
+        "lanthanide": "Lantanida",
+        "actinide": "Aktinida",
+        "unknown, probably transition metal": "Belum Diketahui (kemungkinan Logam Transisi)",
+        "unknown, probably post-transition metal": "Belum Diketahui (kemungkinan Logam Pasca-Transisi)",
+        "unknown, probably metalloid": "Belum Diketahui (kemungkinan Metaloid)",
+        "unknown, predicted to be noble gas": "Belum Diketahui (prediksi Gas Mulia)",
+    }
+
+    # Terjemahan fase ke Bahasa Indonesia
+    phase_id = {
+        "solid": "Padat",
+        "liquid": "Cair",
+        "gas": "Gas",
+    }
+
     def category_title(value):
-        return clean_text(str(value).title()) if value else "&mdash;"
+        if not value or (isinstance(value, float) and pd.isna(value)):
+            return "&mdash;"
+        key = str(value).lower().strip()
+        translated = category_id.get(key)
+        if translated:
+            return escape(translated, quote=True)
+        return clean_text(str(value).title())
+
+    def fmt_phase(val):
+        if val == "" or val is None or (isinstance(val, float) and pd.isna(val)):
+            return "&mdash;"
+        key = str(val).lower().strip()
+        translated = phase_id.get(key)
+        if translated:
+            return escape(translated, quote=True)
+        return escape(str(val), quote=True)
 
     def make_cell(el):
         cat = str(el["category"]).lower()
@@ -491,16 +565,15 @@ if menu == "⚛️ Tabel Periodik":
     # Legend items
     legend = (
         '<div class="pt-legend">'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(56,178,172,0.85)"></div>Nonmetal</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(255,107,107,0.85)"></div>Alkali Metal</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(255,177,66,0.85)"></div>Alkaline Earth</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(99,179,237,0.8)"></div>Transition Metal</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(130,201,30,0.8)"></div>Post-transition</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(255,212,59,0.85)"></div>Metalloid</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(159,122,234,0.85)"></div>Halogen</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(237,100,166,0.85)"></div>Noble Gas</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(246,135,179,0.8)"></div>Lanthanide</div>'
-        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(183,148,244,0.8)"></div>Actinide</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(56,178,172,0.85)"></div>Nonlogam</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(255,107,107,0.85)"></div>Logam Alkali</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(255,177,66,0.85)"></div>Logam Alkali Tanah</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(99,179,237,0.8)"></div>Logam Transisi</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(130,201,30,0.8)"></div>Logam Pasca-Transisi</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(255,212,59,0.85)"></div>Metaloid</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(237,100,166,0.85)"></div>Gas Mulia</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(246,135,179,0.8)"></div>Lantanida</div>'
+        '<div class="pt-legend-item"><div class="pt-legend-dot" style="background:rgba(183,148,244,0.8)"></div>Aktinida</div>'
         '</div>'
     )
 
@@ -524,7 +597,7 @@ if menu == "⚛️ Tabel Periodik":
 
             '<div class="pt-detail-card">'
             '<div class="pt-detail-label">Fase (STP)</div>'
-            f'<div class="pt-detail-value">{fmt(el["phase"])}</div></div>'
+            f'<div class="pt-detail-value">{fmt_phase(el["phase"])}</div></div>'
 
             '<div class="pt-detail-card">'
             '<div class="pt-detail-label">Densitas</div>'
@@ -551,13 +624,31 @@ if menu == "⚛️ Tabel Periodik":
             f'<div class="pt-detail-value" style="font-size:0.82em;text-transform:capitalize">{fmt(el["appearance"])}</div></div>'
 
             '<div class="pt-detail-card">'
-            '<div class="pt-detail-label">Penemu</div>'
+            '<div class="pt-detail-label">Ditemukan Oleh</div>'
             f'<div class="pt-detail-value" style="font-size:0.82em">{fmt(el["discovered_by"])}</div></div>'
         )
 
-        summary_html = ""
-        if el["summary"] and str(el["summary"]).strip():
-            summary_html = f'<div class="pt-detail-summary">{clean_text(el["summary"])}</div>'
+        # Buat ringkasan berbahasa Indonesia dari data unsur
+        phase_text = fmt_phase(el["phase"]).replace("&mdash;", "").strip()
+        cat_text = category_title(el["category"]).replace("&mdash;", "").strip()
+        mass_text = fmt(el["atomic_mass"], "u").replace("&mdash;", "").strip()
+
+        ringkasan_parts = [f"{name} adalah unsur kimia dengan simbol {sym} dan nomor atom {num}."]
+        if mass_text:
+            ringkasan_parts.append(f"Massa atomnya adalah {mass_text}.")
+        if cat_text:
+            ringkasan_parts.append(f"Unsur ini termasuk dalam kategori {cat_text}.")
+        if phase_text:
+            ringkasan_parts.append(f"Pada kondisi standar (STP), unsur ini berfase {phase_text}.")
+
+        ringkasan = " ".join(ringkasan_parts)
+
+        summary_html = (
+            '<div class="pt-detail-summary">'
+            '<strong style="color:rgba(255,255,255,0.65);font-size:0.85em">Ringkasan:</strong><br>'
+            f'{escape(ringkasan, quote=True)}'
+            '</div>'
+        )
 
         popup_html = (
             f'<div id="detail-{sym}" class="pt-popup">'
@@ -612,19 +703,7 @@ if menu == "⚛️ Tabel Periodik":
         '</div>'
     )
 
-    # Render periodic table layout with wrapper to prevent cutoff
-    table_html = (
-        '<div class="pt-container">'
-        '<div class="pt-title">Tabel Periodik</div>'
-        '<div class="pt-helper">118 unsur resmi dengan kategori, nomor grup, dan periode.</div>'
-        '<div class="pt-table-grid">' + grid_html + legend + '</div>'
-        f'{mobile_html}'
-        '</div>' + all_popups_html
-    )
-    st.markdown(table_html, unsafe_allow_html=True)
-
-    # --- Search section ---
-    st.divider()
+    # --- Search section (above the table) ---
     st.subheader("🔍 Cari Unsur")
 
     cari = st.text_input("Masukkan nama atau simbol unsur")
@@ -671,6 +750,21 @@ if menu == "⚛️ Tabel Periodik":
         else:
             st.warning("Unsur tidak ditemukan.")
 
+    st.divider()
+
+    # Render periodic table layout with wrapper to prevent cutoff
+    table_html = (
+        '<div class="pt-container">'
+        '<div class="pt-title">Tabel Periodik</div>'
+        '<div class="pt-helper">118 unsur resmi dengan kategori, nomor grup, dan periode.</div>'
+        '<div class="pt-table-grid">' + grid_html + legend + '</div>'
+        f'{mobile_html}'
+        '</div>' + all_popups_html
+    )
+    st.markdown(table_html, unsafe_allow_html=True)
+
+
+
 # ==========================
 # PEMBUATAN LARUTAN
 # ==========================
@@ -689,6 +783,9 @@ elif menu == "🧪 Pembuatan Larutan":
 
     # MOLARITAS
     with tab1:
+
+        st.subheader("Pengertian Pembuatan Larutan")
+        st.write("Pembuatan larutan adalah proses mencampurkan zat terlarut (solut) ke dalam pelarut (solven) untuk menghasilkan campuran homogen dengan konsentrasi yang diinginkan.")
 
         st.latex(
             r"M=\frac{m}{Mr}\times\frac{1000}{V}"
@@ -791,6 +888,9 @@ elif menu == "🧪 Pembuatan Larutan":
 
     # NORMALITAS
     with tab2:
+
+        st.subheader("Pengertian Normalitas")
+        st.write("Pembuatan larutan adalah proses mencampurkan zat terlarut (solut) ke dalam pelarut (solven) untuk menghasilkan campuran homogen dengan konsentrasi yang diinginkan.")
 
         st.latex(
             r"N=\frac{m}{Mr\times valensi}\times\frac{1000}{V}"
@@ -910,6 +1010,9 @@ elif menu == "🧪 Pembuatan Larutan":
 elif menu == "💧 Pengenceran":
 
     st.title("💧 Pengenceran Larutan")
+
+    st.subheader("Pengertian Pengenceran")
+    st.write("Pengenceran larutan adalah proses penurunan konsentrasi suatu larutan dengan cara menambahkan zat pelarut (seperti air) ke dalam larutan yang pekat. Walaupun volume total larutan bertambah dan konsentrasinya menurun, jumlah zat terlarut di dalamnya akan tetap sama.")
 
     st.latex(
         r"M_1V_1=M_2V_2"
