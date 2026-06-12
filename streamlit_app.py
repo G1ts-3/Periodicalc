@@ -403,31 +403,123 @@ menu = st.sidebar.radio(
 # ==========================
 if menu == "🏠 Beranda":
 
-    st.title("⚛️ Periodicalc")
-    st.write(
-        "Periodicalc adalah aplikasi berbasis Python dan Streamlit yang membantu pengguna "
-        "memahami tabel periodik, pembuatan larutan, dan pengenceran larutan."
-    )
+    # --- Beranda CSS (theme-adaptive) ---
+    st.markdown("""<style>
+    .beranda-hero{background:linear-gradient(135deg,rgba(56,178,172,0.18) 0%,rgba(99,179,237,0.18) 50%,rgba(159,122,234,0.12) 100%);border:1.5px solid color-mix(in srgb,var(--text-color) 12%,transparent);border-radius:18px;padding:38px 34px 30px;margin-bottom:24px;position:relative;overflow:hidden}
+    .beranda-hero::before{content:'⚛️';position:absolute;right:-18px;top:-18px;font-size:8rem;opacity:0.06;pointer-events:none}
+    .beranda-hero-title{font-size:2.4rem;font-weight:800;color:var(--text-color);margin:0 0 4px;font-family:'Segoe UI',sans-serif;line-height:1.15}
+    .beranda-hero-sub{font-size:1.05rem;font-weight:600;color:color-mix(in srgb,var(--text-color) 68%,transparent);margin:0 0 14px;font-family:'Segoe UI',sans-serif}
+    .beranda-hero-desc{font-size:0.92rem;color:color-mix(in srgb,var(--text-color) 72%,transparent);line-height:1.65;margin:0 0 18px;max-width:680px;font-family:'Segoe UI',sans-serif}
+    .beranda-badge{display:inline-block;background:color-mix(in srgb,var(--text-color) 7%,transparent);border:1px solid color-mix(in srgb,var(--text-color) 15%,transparent);border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:600;color:color-mix(in srgb,var(--text-color) 60%,transparent);letter-spacing:0.3px;font-family:'Segoe UI',sans-serif}
+    .beranda-card{background:color-mix(in srgb,var(--text-color) 3%,transparent);border:1.5px solid color-mix(in srgb,var(--text-color) 10%,transparent);border-radius:14px;padding:22px 20px;height:100%;box-sizing:border-box;transition:border-color 0.2s,transform 0.2s}
+    .beranda-card:hover{border-color:color-mix(in srgb,var(--text-color) 22%,transparent);transform:translateY(-2px)}
+    .beranda-card-icon{font-size:1.6rem;margin-bottom:8px}
+    .beranda-card-title{font-size:1rem;font-weight:700;color:var(--text-color);margin-bottom:6px;font-family:'Segoe UI',sans-serif}
+    .beranda-card-text{font-size:0.85rem;color:color-mix(in srgb,var(--text-color) 65%,transparent);line-height:1.55;font-family:'Segoe UI',sans-serif}
+    .beranda-section-title{font-size:1.1rem;font-weight:700;color:var(--text-color);margin:20px 0 6px;font-family:'Segoe UI',sans-serif}
+    .beranda-member{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid color-mix(in srgb,var(--text-color) 8%,transparent);font-family:'Segoe UI',sans-serif}
+    .beranda-member:last-child{border-bottom:none}
+    .beranda-member-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,rgba(56,178,172,0.25),rgba(99,179,237,0.25));display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--text-color);flex-shrink:0}
+    .beranda-member-name{font-size:0.88rem;color:var(--text-color);font-weight:500}
+    .beranda-member-nim{font-size:0.78rem;color:color-mix(in srgb,var(--text-color) 50%,transparent);margin-left:4px}
+    </style>""", unsafe_allow_html=True)
 
-    st.divider()
+    # --- 1. Hero Card ---
+    st.markdown("""
+    <div class="beranda-hero">
+        <div class="beranda-hero-title">Periodicalc</div>
+        <div class="beranda-hero-sub">Tabel Periodik, Pembuatan Larutan, dan Pengenceran Larutan</div>
+        <div class="beranda-hero-desc">
+            Aplikasi berbasis Python dan Streamlit untuk membantu pengguna memahami tabel periodik
+            serta melakukan perhitungan pembuatan larutan dan pengenceran larutan.
+        </div>
+        <div class="beranda-badge">Kelompok 5 • LPK 2026</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.subheader("📋 Tabel Periodik")
-    st.write("Tabel periodik adalah susunan unsur-unsur kimia yang diurutkan berdasarkan nomor atom, konfigurasi elektron, dan kesamaan sifat kimianya. Tabel ini menjadi \"peta\" standar untuk melihat hubungan antar unsur dan memprediksi sifat unsur yang belum ditemukan.")
+    # --- 2. Tentang Aplikasi & Kelompok 5 ---
+    with st.expander("ℹ️ Tentang Aplikasi & Kelompok 5", expanded=False):
+        st.markdown("""
+**Selamat Datang di Periodicalc!**
 
-    st.subheader("🧪 Pembuatan Larutan")
-    st.write("Pembuatan larutan adalah proses mencampurkan zat terlarut (solut) ke dalam pelarut (solven) untuk menghasilkan campuran homogen dengan konsentrasi yang diinginkan.")
+Periodicalc adalah aplikasi yang dirancang sebagai alat bantu interaktif untuk mempermudah pengguna
+dalam memahami tabel periodik, menghitung pembuatan larutan, dan menghitung pengenceran larutan.
 
-    st.subheader("💧 Pengenceran")
-    st.write("Pengenceran larutan adalah proses penurunan konsentrasi suatu larutan dengan cara menambahkan zat pelarut (seperti air) ke dalam larutan yang pekat. Walaupun volume total larutan bertambah dan konsentrasinya menurun, jumlah zat terlarut di dalamnya akan tetap sama.")
+---
 
-    st.divider()
+**Tujuan & Kegunaan:**
+- Mengetahui bobot molekul suatu senyawa beserta karakteristiknya dalam tabel periodik.
+- Mengetahui suatu massa yang diperlukan untuk membuat suatu larutan serta cara pembuatan larutan.
+- Mengetahui konsentrasi atau volume yang diinginkan dalam pengenceran suatu larutan.
 
-    st.subheader("👥 Anggota Kelompok 5")
-    st.write("1. Fani Aulia Nurfauziah (2560626)")
-    st.write("2. Fanny Arrahmah Khaerunnisa (2560627)")
-    st.write("3. Mawaddah Dwita Pebyana (2560668)")
-    st.write("4. Naila Syafitri Ramadhani (2560703)")
-    st.write("5. Najma Faiza Khairiah (2560706)")
+---
+
+**Sumber Data:**
+
+Data unsur pada tabel periodik diambil dari sumber data online, lalu aplikasi juga memiliki data lokal
+sebagai cadangan jika data online gagal dimuat.
+
+---
+
+**Fitur Utama:**
+
+1. **Tabel Periodik** — Menampilkan data unsur kimia, detail unsur, kategori unsur, dan fitur pencarian unsur.
+2. **Pembuatan Larutan** — Menghitung Mr dari rumus molekul, lalu menghitung massa zat yang harus ditimbang berdasarkan molaritas atau normalitas.
+3. **Pengenceran** — Menghitung V₁ atau M₁ menggunakan rumus M₁V₁ = M₂V₂.
+        """)
+
+        st.markdown("---")
+        st.markdown("**Dikembangkan oleh Kelompok 5:**")
+
+        members = [
+            ("Fani Aulia Nurfauziah", "2560626"),
+            ("Fanny Arrahmah Khaerunnisa", "2560627"),
+            ("Mawaddah Dwita Pebyana", "2560668"),
+            ("Naila Syafitri Ramadhani", "2560703"),
+            ("Najma Faiza Khairiah", "2560706"),
+        ]
+        members_html = ""
+        for i, (nama, nim) in enumerate(members, 1):
+            members_html += (
+                f'<div class="beranda-member">'
+                f'<div class="beranda-member-num">{i}</div>'
+                f'<span class="beranda-member-name">{nama}</span>'
+                f'<span class="beranda-member-nim">({nim})</span>'
+                f'</div>'
+            )
+        st.markdown(members_html, unsafe_allow_html=True)
+
+    # --- 3. Feature Cards ---
+    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown("""
+        <div class="beranda-card">
+            <div class="beranda-card-icon">⚛️</div>
+            <div class="beranda-card-title">Tabel Periodik</div>
+            <div class="beranda-card-text">Melihat informasi unsur dan mencari unsur berdasarkan simbol, nama, kategori, atau nomor atom.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="beranda-card">
+            <div class="beranda-card-icon">🧪</div>
+            <div class="beranda-card-title">Pembuatan Larutan</div>
+            <div class="beranda-card-text">Menghitung Mr dan massa zat yang harus ditimbang berdasarkan konsentrasi dan volume larutan.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div class="beranda-card">
+            <div class="beranda-card-icon">💧</div>
+            <div class="beranda-card-title">Pengenceran</div>
+            <div class="beranda-card-text">Menghitung volume atau konsentrasi larutan awal menggunakan rumus pengenceran.</div>
+        </div>
+        """, unsafe_allow_html=True)
 
 # ==========================
 # TABEL PERIODIK
@@ -784,8 +876,8 @@ elif menu == "🧪 Pembuatan Larutan":
     # MOLARITAS
     with tab1:
 
-        st.subheader("Pengertian Pembuatan Larutan")
-        st.write("Pembuatan larutan adalah proses mencampurkan zat terlarut (solut) ke dalam pelarut (solven) untuk menghasilkan campuran homogen dengan konsentrasi yang diinginkan.")
+        st.subheader("Pembuatan Larutan Molaritas")
+        st.write("Fitur ini membantu menghitung massa zat yang diperlukan untuk membuat larutan dengan konsentrasi dan volume tertentu. Cukup masukkan rumus senyawa, molaritas, dan volume larutan, kemudian sistem akan menghitung massa zat yang harus ditimbang secara otomatis.")
 
         st.latex(
             r"M=\frac{m}{Mr}\times\frac{1000}{V}"
@@ -889,8 +981,8 @@ elif menu == "🧪 Pembuatan Larutan":
     # NORMALITAS
     with tab2:
 
-        st.subheader("Pengertian Normalitas")
-        st.write("Pembuatan larutan adalah proses mencampurkan zat terlarut (solut) ke dalam pelarut (solven) untuk menghasilkan campuran homogen dengan konsentrasi yang diinginkan.")
+        st.subheader("Pembuatan Larutan Normalitas")
+        st.write("Fitur ini membantu menghitung massa zat yang diperlukan untuk membuat larutan dengan konsentrasi dan volume tertentu. Cukup masukkan rumus senyawa, normalitas, valensi, dan volume larutan, kemudian sistem akan menghitung massa zat yang harus ditimbang secara otomatis.")
 
         st.latex(
             r"N=\frac{m}{Mr\times valensi}\times\frac{1000}{V}"
@@ -1011,9 +1103,6 @@ elif menu == "💧 Pengenceran":
 
     st.title("💧 Pengenceran Larutan")
 
-    st.subheader("Pengertian Pengenceran")
-    st.write("Pengenceran larutan adalah proses penurunan konsentrasi suatu larutan dengan cara menambahkan zat pelarut (seperti air) ke dalam larutan yang pekat. Walaupun volume total larutan bertambah dan konsentrasinya menurun, jumlah zat terlarut di dalamnya akan tetap sama.")
-
     st.latex(
         r"M_1V_1=M_2V_2"
     )
@@ -1023,6 +1112,8 @@ elif menu == "💧 Pengenceran":
 
     # --- TAB 1: HITUNG V1 ---
     with tab1:
+        st.subheader("Pengenceran V1")
+        st.write("Fitur ini membantu menghitung volume yang diperlukan dalam proses pengenceran larutan. Masukkan data yang diketahui, kemudian sistem akan menghitung volume yang diperlukan berdasarkan persamaan pengenceran M₁V₁ = M₂V₂.")
         st.subheader("Hitung Volume Awal (V1)")
         M1 = st.number_input(
             "Konsentrasi Awal (M1)",
@@ -1071,6 +1162,8 @@ elif menu == "💧 Pengenceran":
 
     # --- TAB 2: HITUNG M1 ---
     with tab2:
+        st.subheader("Pengenceran M1")
+        st.write("Fitur ini membantu menghitung konsentrasi yang diperlukan dalam proses pengenceran larutan. Masukkan data yang diketahui, kemudian sistem akan menghitung konsentrasi yang diperlukan berdasarkan persamaan pengenceran M₁V₁ = M₂V₂.")
         st.subheader("Hitung Konsentrasi Awal (M1)")
         V1_m1 = st.number_input(
             "Volume Awal (V1) (mL)",
